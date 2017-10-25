@@ -23,7 +23,7 @@
     ],
     "scripts": [
       "../node_modules/jquery/dist/jquery.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js",
+      "../node_modules/popper.js/dist/esm/popper.js",
       "../node_modules/tether/dist/js/tether.js",
       "../node_modules/bootstrap/dist/js/bootstrap.min.js"
     ],
