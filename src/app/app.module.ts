@@ -2,6 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+//Services imports
+import { ClientsService } from './services/clients.service';
+//Firebase imports
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabase, AngularFireDatabaseProvider } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+//Components imports
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './componnets/dashboard/dashboard.component';
 import { ClientsComponent } from './componnets/clients/clients.component';
@@ -14,6 +21,8 @@ import { PageNotFoundComponent } from './componnets/page-not-found/page-not-foun
 import { LoginComponent } from './componnets/login/login.component';
 import { RegisterComponent } from './componnets/register/register.component';
 import { SettingsComponent } from './componnets/settings/settings.component';
+// Environment imports 
+import { environment } from '../environments/environment';
 
 
 const appRoutes: Routes = [
@@ -39,9 +48,11 @@ const appRoutes: Routes = [
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule
     ],
-    providers: [],
+    providers: [ClientsService, AngularFireDatabaseProvider],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
