@@ -1,38 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
 
 import { AngularFirestore, } from 'angularfire2/firestore';
 // import {  FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireDatabase } from "angularfire2/database";
-// import {  FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Client } from '../models/client.model'
 
 @Injectable()
 export class ClientsService {
-    // clients: FirebaseListObservable<any[]>;
-    // client: FirebaseObjectObservable<any>
-    // constructor(
-    //     public db: AngularFireDatabase
-    // ) {
-    //     this.clients = db.list('clients') as FirebaseListObservable<Client[]>;
-    // };
 
+    itemsRef: AngularFireList<any>;
     clients: Observable<any[]>;
-    constructor(db: AngularFireDatabase) {
-        this.clients = db.list('clients').valueChanges();
+    constructor(private db: AngularFireDatabase) {
+        this.itemsRef = db.list('clients');
+        this.clients = this.itemsRef.snapshotChanges().map(changes => {
+            return changes.map(c => ({ key: c.payload.key, data:c.payload.val() }));
+        });
+        // this.clients = db.list('clients').valueChanges();
+
     }
     getClients() {
         return this.clients;
     }
     addclient() {
-        // const clients = this.db.object('clients');
-        // clients.set({
-        //     firstName: 'Abubakar',
-        //     lastName: 'Zafar',
-        //     email: 'this is email',
-        //     phone: '4444-44---4',
-        //     balance: '5555'
-        // });
     }
 
 }
